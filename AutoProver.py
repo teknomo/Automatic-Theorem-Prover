@@ -63,15 +63,15 @@ def replace_with_variables(clause, theta = {}):
 
 #______________________________________________________________________________
 
-print '\nAutomatic Theorem Prover for First Order Logic, implemented by Aashish Satyajith.\n'
-print 'Enter HELP for help.\n'
-print 'Enter statements in first-order logic one by one:'
-print 'Enter STOP when done.\n'
+print('\nAutomatic Theorem Prover for First Order Logic, implemented by Aashish Satyajith.\n')
+print('Enter HELP for help.\n')
+print('Enter statements in first-order logic one by one:')
+print('Enter STOP when done.\n')
 
 # the knowledge base that stores all the statements
 kb = KnowledgeBase()
 
-statement = raw_input()
+statement = input()
 while statement != 'STOP':
     if statement == 'HELP':
         print_help()
@@ -81,10 +81,10 @@ while statement != 'STOP':
     clause = convert_to_clause(parsed_stmnt)   
     # add to knowledge base
     kb.tell(clause)    
-    statement = raw_input()
+    statement = input()
     
 # input query
-query_input = raw_input('\nEnter statement to prove: ')
+query_input = input('\nEnter statement to prove: ')
 assert query_input != ''
 
 # replace the constants in the query with variables
@@ -154,9 +154,9 @@ proof_flag = False
 vbls_in_query = find_variables(query)
 for answer in kb.ask(query):
     # comment the below part out if you're using the program as a query-based system    
-    if all(reqd_theta[key] == answer[key] for key in reqd_theta.keys()):
+    if all(reqd_theta[key] == answer[key] for key in list(reqd_theta.keys())):
         # all keys match        
-        print '\nProof:\n'
+        print('\nProof:\n')
         print_parent(answer, query)
         proof_flag = True
         break
@@ -165,6 +165,6 @@ for answer in kb.ask(query):
 ##    print_parent(answer, query)
 
 if not proof_flag:
-    print '\nSorry, your statement could not be proved.\n'
+    print('\nSorry, your statement could not be proved.\n')
 else:
-    print ''
+    print('')

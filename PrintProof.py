@@ -19,7 +19,7 @@ def complete_substitute(theta, clause):
     This is needed for displaying the proof.
     """
     
-    for i in range(0, len(theta.keys())):
+    for i in range(0, len(list(theta.keys()))):
         clause = substitute(theta, clause)
     return clause
 
@@ -33,15 +33,15 @@ def print_parent(theta, clause):
     
     if clause not in parent_clauses:
         # last statement, must have already been given in kb
-        print 'We know', complete_substitute(theta, clause), '(given)'
+        print('We know', complete_substitute(theta, clause), '(given)')
         return
     parents, law_used, clause_used = parent_clauses[clause]
     for parent in parents:
         print_parent(theta, parent)
-    print 'which leads to', complete_substitute(theta, clause),
+    print('which leads to', complete_substitute(theta, clause), end=' ')
     if clause_used is not None:
         # clause was of the implication form
-        print '(' + law_used, 'on', str(clause_used) + ')'
+        print('(' + law_used, 'on', str(clause_used) + ')')
     else:
-        print '(' + law_used + ')'
+        print('(' + law_used + ')')
         

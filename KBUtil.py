@@ -31,7 +31,7 @@ class KnowledgeBase:
         if is_definite_clause(clause):
             self.predicate_index(clause, clause)
         else:
-            print 'Clause not definite, ignored:', clause
+            print('Clause not definite, ignored:', clause)
             
     def ask(self, query):
         return FolBC.fol_bc_ask(self, query)
@@ -72,7 +72,7 @@ class KnowledgeBase:
             # we've received a simple letter goal, say 'x'
             # no option other than to send all the clauses
             all_clauses = []
-            for key in self.clauses.keys():
+            for key in list(self.clauses.keys()):
                 all_clauses += self.clauses[key]
             # simply returning all_clauses might result in a lot of duplicates
             # for e.g. P ==> Q is stored both under keys P and Q
@@ -121,7 +121,7 @@ class Clause:
         
         self.op = op
         self.parents = parents
-        self.args = map(convert_to_clause, args)
+        self.args = list(map(convert_to_clause, args))
         
     def __hash__(self):
         return hash(self.op) ^ hash(tuple(self.args))
@@ -248,11 +248,11 @@ def negate(clause):
     # and
     if clause.op == '&':
         # ~(P & Q) becomes ~P | ~Q
-        return Clause('|', map(negate, clause.args))
+        return Clause('|', list(map(negate, clause.args)))
     # or
     elif clause.op == '|':
         # ~(P | Q) becomes ~P & ~Q
-        return Clause('&', map(negate, clause.args))
+        return Clause('&', list(map(negate, clause.args)))
     # implies
     elif clause.op == '==>':
         # ~(P ==> Q) becomes P & ~Q
